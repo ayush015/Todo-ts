@@ -1,6 +1,11 @@
 import React, { FC, FormEvent, ChangeEvent, useState } from "react";
 import { ITodo } from "../interface";
-
+type TodoItem = {
+  title: string;
+  description: string;
+  id?: number;
+  onAdd: (newTodo: ITodo) => {};
+};
 const TodoItem: FC = (props) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -10,7 +15,8 @@ const TodoItem: FC = (props) => {
     name === "title" ? setTitle(value) : setDescription(value);
   };
   const handleSubmit = (e: FormEvent<HTMLInputElement>): void => {
-    props.onAdd({ title, description });
+    const newTodo = { title: title, description: description };
+    props.onAdd(newTodo);
     setTitle("");
     setDescription("");
     e.preventDefault();
