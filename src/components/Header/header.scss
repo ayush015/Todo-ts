@@ -1,0 +1,15 @@
+$headerBackgroundColor: "#0076b2";
+
+.headerBar {
+  position: fixed;
+  background-color: $headerBackgroundColor;
+}
+.headerLeft {
+  display: flex;
+  position: absolute;
+  left: 16;
+  top: 12;
+  h4 {
+    margin: 10px 8px;
+  }
+}

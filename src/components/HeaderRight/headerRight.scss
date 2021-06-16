@@ -1,0 +1,14 @@
+.headerRight {
+  display: flex;
+  position: absolute;
+  right: 0;
+  width: 40;
+  height: 40;
+  left: inherit;
+  .btn-add {
+    right: 50;
+  }
+  .btn-dot {
+    right: 35;
+  }
+}

@@ -4,7 +4,7 @@ module.exports = function (app: any) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://localhost:4000",
+      target: "https://vast-inlet-30630.herokuapp.com/",
       changeOrigin: true,
     })
   );
