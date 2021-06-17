@@ -2,13 +2,16 @@
   display: flex;
   position: absolute;
   right: 0;
-  width: 40;
-  height: 40;
+  height: 40px;
   left: inherit;
   .btn-add {
-    right: 50;
+    width: 40px;
+    height: 40px;
+    right: 26px;
   }
   .btn-dot {
-    right: 35;
+    width: 40px;
+    height: 40px;
+    right: 20px;
   }
 }

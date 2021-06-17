@@ -2,10 +2,10 @@ import * as React from "react";
 import "./headerRight.scss";
 import { Menu, MenuItem, Fab, Tooltip } from "@material-ui/core";
 import { MoreVert, Add } from "@material-ui/icons";
-interface HeaderRight {
-  setOpen?: any;
+interface HeaderRightProp {
+  fnSetOpen: (v: boolean) => void;
 }
-export const HeaderRight: React.FC<HeaderRight> = ({ setOpen }) => {
+export const HeaderRight: React.FC<HeaderRightProp> = ({ fnSetOpen }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
@@ -20,17 +20,24 @@ export const HeaderRight: React.FC<HeaderRight> = ({ setOpen }) => {
   return (
     <div className="headerRight">
       <Tooltip title="Add task">
-        <Fab className="btn-add" aria-label="add" onClick={() => setOpen(true)}>
+        <Fab
+          className="btn-add"
+          aria-label="add"
+          onClick={() => fnSetOpen(true)}
+        >
           <Add />
         </Fab>
       </Tooltip>
-      <Fab className="btn-dot" aria-controls="long-menu">
+      <Fab className="btn-dot" aria-controls="long-menu" onClick={handleClick}>
         <MoreVert />
       </Fab>
       <Menu
         id="long-menu"
+        style={{ top: "25px" }}
+        anchorEl={anchorEl}
         keepMounted
-        open={false}
+        open={open}
+        onClose={handleClose}
         PaperProps={{
           style: {
             maxHeight: 48 * 4.5,
