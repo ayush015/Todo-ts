@@ -1,8 +1,5 @@
-import * as React from "react";
-import { Header } from "../Header/Header";
-import { HeaderRight } from "../HeaderRight/HeaderRight";
-import { Modal } from "../Modal/Modal";
-import { TodoList } from "../TodoList/TodoList";
+import React, { useState, useEffect, ChangeEvent } from "react";
+//@material-ui imports
 import {
   TextField,
   Grid,
@@ -12,10 +9,51 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { Clear, Edit, Delete } from "@material-ui/icons";
+
+//local imports
+import { Header } from "../Header/Header";
+import { HeaderRight } from "../HeaderRight/HeaderRight";
+import { Modal } from "../Modal/Modal";
+import { TodoList } from "../TodoList/TodoList";
+//services import
+import { deleteAPI, fetchAPI, postAPI } from "../../services/api";
+import { ITodo } from "../../interface";
+
 export const DashBoard = () => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false); //for modal
+  const [taskList, setTaskList] = useState<ITodo[] | []>([]); // array of todos
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
+
+  //function sent as props to <headerRight /> component to open the modal
   const handleSetOpen = (bool: boolean) => {
     setOpen(bool);
+  };
+
+  //GET request for all todos
+  useEffect(() => {
+    fetchAPI("/").then((res: any) => {
+      setTaskList(res.data);
+      console.log(taskList);
+    });
+  }, [taskList]);
+
+  //POST request for adding task to <TodoList />
+  const addTask = () => {
+    const todo = JSON.stringify({ title, description });
+    postAPI("/", todo).then((res: any) => {
+      const newTodo = res;
+      setTaskList([...taskList, newTodo]);
+      setOpen(false);
+      setTitle("");
+      setDescription("");
+    });
+  };
+
+  //DELETE request for deleting any particular todo
+  const handleDelete = (_id: string) => {
+    deleteAPI(`/${_id}`);
+    setTaskList((prev) => prev.filter((m: ITodo) => m._id !== _id));
   };
   return (
     <>
@@ -33,10 +71,26 @@ export const DashBoard = () => {
           </IconButton>
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
-              <TextField helperText="" placeholder="Add text" name="title" />
+              <TextField
+                helperText=""
+                placeholder="Add text"
+                name="title"
+                value={title}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setTitle(e.target.value);
+                }}
+              />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-              <TextField helperText="" placeholder="Description" name="title" />
+              <TextField
+                helperText=""
+                placeholder="Description"
+                name="description"
+                value={description}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setDescription(e.target.value);
+                }}
+              />
             </Grid>
           </Grid>
         </DialogContent>
@@ -49,26 +103,37 @@ export const DashBoard = () => {
             >
               Cancel
             </Button>
-            <Button className="buttonDefault" type="submit">
+            <Button className="buttonDefault" type="submit" onClick={addTask}>
               Add
             </Button>
           </Grid>
         </DialogActions>
       </Modal>
 
-      <TodoList
-        title="Hello world"
-        description="Lorem Ipusm Lorem Ipusm Lorem Ipusm Lorem IpusmLorem IpusmLorem IpusmLorem Ipusm"
-      >
-        <div style={{ position: "relative", bottom: "150px", left: "21%" }}>
-          <IconButton className="edit" aria-label="Close">
-            <Edit />
-          </IconButton>
-          <IconButton className="delete" aria-label="Close">
-            <Delete />
-          </IconButton>
-        </div>
-      </TodoList>
+      {taskList.map(({ title, description, _id }) => {
+        return (
+          <>
+            <TodoList title={title} description={description} key={_id}>
+              <div
+                style={{ position: "relative", bottom: "150px", left: "21%" }}
+              >
+                <IconButton className="edit" aria-label="Close">
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  className="delete"
+                  aria-label="Close"
+                  onClick={() => {
+                    handleDelete(`${_id}`);
+                  }}
+                >
+                  <Delete />
+                </IconButton>
+              </div>
+            </TodoList>
+          </>
+        );
+      })}
     </>
   );
 };
