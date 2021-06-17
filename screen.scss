@@ -1,0 +1,46 @@
+@media only screen and (max-device-width: 1010px) and (min-device-height: 600px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  { 
+    html {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (min-device-width: 1366px) and (min-device-height: 600px) {
+    html {
+        font-size: 13px;
+    }
+}
+@media only screen and (min-device-width: 1366px) and (min-device-height: 760px) {
+    html {
+        font-size: 12.5px;
+    }
+}
+@media only screen and (min-device-width: 1300px) and (min-device-height: 1004px) {
+    html {
+        font-size: 20px;
+    }
+}
+@media only screen and (min-device-width: 1536px) and (min-device-height: 759px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-device-width: 1920px) and (min-device-height: 912px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 670px) and (orientation:landscape) {
+    html {
+        font-size: 12px;
+    }
+}

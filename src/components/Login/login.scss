@@ -1,0 +1,25 @@
+.signInDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: radial-gradient(#dbd9d9, #8f8f8f);
+  & a {
+    text-decoration: none;
+  }
+  & button {
+    color: #fff;
+    background: #0076b2;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px;
+    text-transform: none;
+    & img {
+      width: 60px;
+    }
+  }
+  & button:hover {
+    opacity: 0.8;
+    background-color: #0076b2;
+  }
+}

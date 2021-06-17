@@ -3,9 +3,9 @@ import "./headerRight.scss";
 import { Menu, MenuItem, Fab, Tooltip } from "@material-ui/core";
 import { MoreVert, Add } from "@material-ui/icons";
 interface HeaderRightProp {
-  fnSetOpen: (v: boolean) => void;
+  handleSetOpen: (v: boolean) => void;
 }
-export const HeaderRight: React.FC<HeaderRightProp> = ({ fnSetOpen }) => {
+export const HeaderRight: React.FC<HeaderRightProp> = ({ handleSetOpen }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
@@ -23,7 +23,7 @@ export const HeaderRight: React.FC<HeaderRightProp> = ({ fnSetOpen }) => {
         <Fab
           className="btn-add"
           aria-label="add"
-          onClick={() => fnSetOpen(true)}
+          onClick={() => handleSetOpen(true)}
         >
           <Add />
         </Fab>
